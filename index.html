@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MovieDataBase</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="stylesheet" href="dist/spectre.min.css">
+</head>
+<body onload="movieDataBase.renderMovies()">
+	<div class="container grid-960">
+		<div class="columns">
+		    <div class="column col-6">
+		        <form action="#forms" id="forms">
+		            <div class="form-group">
+		                <label class="form-label">Titel</label>
+		                <input id="title" class="form-input" type="text" placeholder="Titel">
+		            </div>
+		            <div class="form-group">
+		                <label class="form-label">Bild</label>
+		                <input id="cover" class="form-input" type="text" placeholder="Url till bild">
+		            </div>
+		            <div class="form-group">
+		                <label class="form-label">Årtal</label>
+		                <input id="year" class="form-input" type="number" placeholder="Årtal">
+		            </div>
+		            <div class="form-group">
+		                <label class="form-label">Genre</label>
+		                <input id="genre" class="form-input" type="text" placeholder="För att lägga till fler genres separera med komma ,">
+		            </div>
+		            <div class="form-group">
+		                <button class="btn btn-primary" type="submit" onclick="movieDataBase.movie()">Lägg till film</button>
+		                <button class="btn btn-link" type="reset">Avbryt</button>
+		            </div>
+		        </form>
+		    </div>
+		    <div class="column col-xs-6">
+          <div class="dropdown">
+              <a class="btn btn-link dropdown-toggle" tabindex="0">Hämta film enligt <i class="icon-caret"></i></a>
+              <ul class="menu">
+                  <li class="menu-item">
+                      <a href="#dropdowns" id="1" onclick="movieDataBase.getTopRatedMovie()">
+                          Högsta betyg
+                      </a>
+                  </li>
+                  <li class="menu-item">
+                      <a href="#dropdowns" id="2" onclick="movieDataBase.getWorstRatedMovie()">
+                          Sämsta betyg
+                      </a>
+                  </li>
+                  <li class="menu-item">
+                      <a href="#dropdowns" id="3" onclick="movieDataBase.getMoviesThisYear()">
+                          Släppår
+                      </a>
+                  </li>
+                  <li class="menu-item">
+                      <a href="#dropdowns" id="4" onclick="movieDataBase.getMoviesByGenre()">
+                          Genre
+                      </a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+		</div>
+	</div>
+	<div class="container grid-960">
+		<div class="columns" id="movieView"></div>
+	</div>
+	<script src="js/main.js"></script>
+</body>
+</html>

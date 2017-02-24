@@ -15,7 +15,7 @@ var movieDataBase = {
   		title: "The Machinist",
   		year: 2004,
   		genre: ["Action", "Drama", "History"],
-  		ratings: [6, 7, 4, 6],
+  		ratings: [6, 7, 4, 6, 7],
   		avgRatings: [],
   		cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BNjk1NzBlY2YtNjJmNi00YTVmLWI2OTgtNDUxNDE5NjUzZmE0XkEyXkFqcGdeQXVyNTc1NTQxODI@._V1_.jpg"
   	},

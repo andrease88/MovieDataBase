@@ -267,9 +267,7 @@ var movieDataBase = {
 		}
 	},
 };
-document.getElementById('allmovies').addEventListener('click', function(){
-	return movieDataBase.render(movieDataBase.movies);
-});
+document.getElementById('allmovies').addEventListener('click', () => movieDataBase.render(movieDataBase.movies));
 window.addEventListener("load", function load(event){
     window.removeEventListener("load", load, false);
     movieDataBase.render(movieDataBase.movies);

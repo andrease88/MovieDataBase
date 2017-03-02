@@ -13,7 +13,7 @@ var movieDataBase = { //The mother of all objects that containts arrays, functio
     {
       title: "Kong: Skull Islands",
       year: 2017,
-      genre: ["Action", "Adventure", "Fantasy", "Sci-Fi"],
+      genre: ["Action", "Fantasy", "Sci-Fi"],
       ratings: [8, 7, 6, 7 ,8],
       avgRatings: [],
       cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTUwMzI5ODEwNF5BMl5BanBnXkFtZTgwNjAzNjI2MDI@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
@@ -109,7 +109,7 @@ var movieDataBase = { //The mother of all objects that containts arrays, functio
     {
     	title: "Dawn of the Planet of the Apes",
     	year: 2014,
-    	genre: ["Action", "Adventure", "Drama", "Sci-Fi"],
+    	genre: ["Action", "Adventure", "Sci-Fi"],
     	ratings: [7, 8, 7, 8, 9, 10],
   		avgRatings: [],
 			cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTgwODk3NDc1N15BMl5BanBnXkFtZTgwNTc1NjQwMjE@._V1_SY1000_SX675_AL_.jpg"

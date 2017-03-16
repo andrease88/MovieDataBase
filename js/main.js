@@ -1,395 +1,619 @@
 //jshint esversion:6
-var movieDataBase = { //The mother of all objects that containts arrays, functions, prototype etc.
-  prototype:{}, //This is the object prototype that are being used/copied when a new movie is created.
+const moviedb = { //The mother of all objects that containts arrays, functions, prototype.
+  //List of HTML elements
+  el: {
+    movies: document.getElementById('movies'),
+    modal: document.getElementsByClassName('modal'),
+    forminput: document.getElementsByClassName('form-input'),
+    movieobject: document.getElementsByClassName('movieobject'),
+    canvas: document.getElementById('canvas'),
+  },
+  id: 0, //ID that will increase by 1 each time a new movie is created.
+  prototype: {}, //This is the object prototype that are being used/copied when a new movie is created.
   movies: [ //This is my 'Database' that contains all the movies and will contain all new movies that will be created.
     {
       title: "Logan",
       year: 2017,
-      genre: ["Action", "Drama", "Sci-Fi"],
+      genres: ["Action", "Drama", "Sci-Fi"],
       ratings: [9, 8, 9, 9, 9, 7],
       avgRatings: [],
+      id: 0,
       cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMjI1MjkzMjczMV5BMl5BanBnXkFtZTgwNDk4NjYyMTI@._V1_SY1000_CR0,0,676,1000_AL_.jpg"
     },
     {
       title: "Kong: Skull Islands",
       year: 2017,
-      genre: ["Action", "Fantasy", "Sci-Fi"],
+      genres: ["Action", "Fantasy", "Sci-Fi"],
       ratings: [8, 7, 6, 7 ,8],
       avgRatings: [],
+      id: 1,
       cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTUwMzI5ODEwNF5BMl5BanBnXkFtZTgwNjAzNjI2MDI@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
     },
     {
       title: "Uncertain",
       year: 2015,
-      genre: ["Documentary", "Comedy", "Drama"],
+      genres: ["Documentary", "Comedy", "Drama"],
       ratings: [6, 8, 9, 8, 7],
       avgRatings: [],
+      id: 2,
       cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMGViNGQwNWEtYmQxZi00MTc5LThjYjctNzE3M2ExZDZjNjAxXkEyXkFqcGdeQXVyMTM2MzgyOTU@._V1_SY1000_CR0,0,675,1000_AL_.jpg"
     },
     {
       title: "Arrival",
       year: 2016,
-      genre: ["Drama", "Mystery", "Sci-Fi"],
+      genres: ["Drama", "Mystery", "Sci-Fi"],
       ratings: [8, 10, 7, 7, 8],
       avgRatings: [],
+      id: 3,
       cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTExMzU0ODcxNDheQTJeQWpwZ15BbWU4MDE1OTI4MzAy._V1_SY1000_CR0,0,640,1000_AL_.jpg"
     },
-  	{
-  		title: "Transformers: Age of Extinction",
-  		year: 2014,
-  		genre: ["Action", "Adventure", "Sci-Fi"],
-  		ratings: [6, 3, 4, 5],
-  		avgRatings: [],
-  		cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMjEwNTg1MTA5Nl5BMl5BanBnXkFtZTgwOTg2OTM4MTE@._V1_SY1000_CR0,0,640,1000_AL_.jpg"
-  	},
-  	{
-  		title: "The Machinist",
-  		year: 2004,
-  		genre: ["Action", "Drama", "History"],
-  		ratings: [6, 7, 4, 6, 7],
-  		avgRatings: [],
-  		cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BNjk1NzBlY2YtNjJmNi00YTVmLWI2OTgtNDUxNDE5NjUzZmE0XkEyXkFqcGdeQXVyNTc1NTQxODI@._V1_.jpg"
-  	},
-  	{
-  		title: "Tangled",
-  		year: 2010,
-  		genre: ["Action", "Drama", "Sci-Fi"],
-  		ratings: [6, 7, 6, 9, 8],
-  		avgRatings: [],
-  		cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTAxNDYxMjg0MjNeQTJeQWpwZ15BbWU3MDcyNTk2OTM@._V1_.jpg"
-  	},
-  	{
-  		title: "Despicable Me 2",
-  		year: 2013,
-  		genre: ["Animation", "Comedy", "Family"],
-  		ratings: [6, 7, 8, 6],
-  		avgRatings: [],
-  		cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMjExNjAyNTcyMF5BMl5BanBnXkFtZTgwODQzMjQ3MDE@._V1_SY1000_CR0,0,675,1000_AL_.jpg"
-  	},
+    {
+      title: "Transformers: Age of Extinction",
+      year: 2014,
+      genres: ["Action", "Adventure", "Sci-Fi"],
+      ratings: [6, 3, 4, 5],
+      avgRatings: [],
+      id: 4,
+      cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMjEwNTg1MTA5Nl5BMl5BanBnXkFtZTgwOTg2OTM4MTE@._V1_SY1000_CR0,0,640,1000_AL_.jpg"
+    },
+    {
+      title: "The Machinist",
+      year: 2004,
+      genres: ["Action", "Drama", "History"],
+      ratings: [6, 7, 4, 6, 7],
+      avgRatings: [],
+      id: 5,
+      cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BNjk1NzBlY2YtNjJmNi00YTVmLWI2OTgtNDUxNDE5NjUzZmE0XkEyXkFqcGdeQXVyNTc1NTQxODI@._V1_.jpg"
+    },
+    {
+      title: "Tangled",
+      year: 2010,
+      genres: ["Action", "Drama", "Sci-Fi"],
+      ratings: [6, 7, 6, 9, 8],
+      avgRatings: [],
+      id: 6,
+      cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTAxNDYxMjg0MjNeQTJeQWpwZ15BbWU3MDcyNTk2OTM@._V1_.jpg"
+    },
+    {
+      title: "Despicable Me 2",
+      year: 2013,
+      genres: ["Animation", "Comedy", "Family"],
+      ratings: [6, 7, 8, 6],
+      avgRatings: [],
+      id: 7,
+      cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMjExNjAyNTcyMF5BMl5BanBnXkFtZTgwODQzMjQ3MDE@._V1_SY1000_CR0,0,675,1000_AL_.jpg"
+    },
     {
       title: "How to Train Your Dragon",
       year: 2010,
-      genre: ["Animation", "Adventure", "Family"],
+      genres: ["Animation", "Adventure", "Family"],
       ratings: [6, 8, 9, 8, 7],
-  		avgRatings: [],
+      avgRatings: [],
+      id: 8,
       cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw@@._V1_SY1000_CR0,0,672,1000_AL_.jpg"
     },
     {
-    	title: "Fifty Shades Darker",
-    	year: 2017,
-    	genre: ["Drama", "Romance"],
-    	ratings: [5, 4, 3, 5, 4],
-  		avgRatings: [],
-    	cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ5NTk0Njg2N15BMl5BanBnXkFtZTgwNzk5Nzk3MDI@._V1_SY1000_CR0,0,631,1000_AL_.jpg"
+      title: "Fifty Shades Darker",
+      year: 2017,
+      genres: ["Drama", "Romance"],
+      ratings: [5, 4, 3, 5, 4],
+      avgRatings: [],
+      id: 9,
+      cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ5NTk0Njg2N15BMl5BanBnXkFtZTgwNzk5Nzk3MDI@._V1_SY1000_CR0,0,631,1000_AL_.jpg"
     },
     {
-    	title: "Jurassic World",
-    	year: 2015,
-    	genre: ["Action", "Adventure", "Sci-Fi"],
-    	ratings: [7, 8, 8, 9, 7],
-  		avgRatings: [],
-    	cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ5MTE0MTk3Nl5BMl5BanBnXkFtZTgwMjczMzk2NTE@._V1_SY1000_CR0,0,631,1000_AL_.jpg"
+      title: "Jurassic World",
+      year: 2015,
+      genres: ["Action", "Adventure", "Sci-Fi"],
+      ratings: [7, 8, 8, 9, 7],
+      avgRatings: [],
+      id: 10,
+      cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ5MTE0MTk3Nl5BMl5BanBnXkFtZTgwMjczMzk2NTE@._V1_SY1000_CR0,0,631,1000_AL_.jpg"
     },
     {
-    	title: "Dumb Dumber To",
-    	year: 2014,
-    	genre: ["Comedy"],
-    	ratings: [7, 8, 8, 9, 7],
-  		avgRatings: [],
-			cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTYxMzA0MzAyMF5BMl5BanBnXkFtZTgwMjMyNjcwMjE@._V1_SY1000_CR0,0,631,1000_AL_.jpg"
+      title: "Dumb Dumber To",
+      year: 2014,
+      genres: ["Comedy"],
+      ratings: [7, 8, 8, 9, 7],
+      avgRatings: [],
+      id: 11,
+      cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTYxMzA0MzAyMF5BMl5BanBnXkFtZTgwMjMyNjcwMjE@._V1_SY1000_CR0,0,631,1000_AL_.jpg"
     },
     {
-    	title: "The Hangover",
-    	year: 2009,
-    	genre: ["Comedy"],
-    	ratings: [7, 8, 6, 5, 7],
-  		avgRatings: [],
-			cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTU1MDA1MTYwMF5BMl5BanBnXkFtZTcwMDcxMzA1Mg@@._V1_.jpg"
+      title: "The Hangover",
+      year: 2009,
+      genres: ["Comedy"],
+      ratings: [7, 8, 6, 5, 7],
+      avgRatings: [],
+      id: 12,
+      cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTU1MDA1MTYwMF5BMl5BanBnXkFtZTcwMDcxMzA1Mg@@._V1_.jpg"
     },
     {
-    	title: "Dawn of the Planet of the Apes",
-    	year: 2014,
-    	genre: ["Action", "Adventure", "Sci-Fi"],
-    	ratings: [7, 8, 7, 8, 9, 10],
-  		avgRatings: [],
-			cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTgwODk3NDc1N15BMl5BanBnXkFtZTgwNTc1NjQwMjE@._V1_SY1000_SX675_AL_.jpg"
+      title: "Dawn of the Planet of the Apes",
+      year: 2014,
+      genres: ["Action", "Adventure", "Sci-Fi"],
+      ratings: [7, 8, 7, 8, 9, 10],
+      avgRatings: [],
+      id: 13,
+      cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTgwODk3NDc1N15BMl5BanBnXkFtZTgwNTc1NjQwMjE@._V1_SY1000_SX675_AL_.jpg"
     },
     {
-    	title: "The Godfather",
-    	year: 1972,
-    	genre: ["Crime", "Drama"],
-    	ratings: [7, 9, 7, 8, 9, 10],
-  		avgRatings: [],
-			cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BZTRmNjQ1ZDYtNDgzMy00OGE0LWE4N2YtNTkzNWQ5ZDhlNGJmL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,704,1000_AL_.jpg"
+      title: "The Godfather",
+      year: 1972,
+      genres: ["Crime", "Drama"],
+      ratings: [7, 9, 7, 8, 9, 10],
+      avgRatings: [],
+      id: 14,
+      cover: "https://images-na.ssl-images-amazon.com/images/M/MV5BZTRmNjQ1ZDYtNDgzMy00OGE0LWE4N2YtNTkzNWQ5ZDhlNGJmL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,704,1000_AL_.jpg"
     }
   ],
-  /*submitMovie() This function will be called whenever a user wants to submit/create a
-  new movie and push it into the database movie array, this function
-  will get all the values within the form and set an variable to each
-  value and send it to the create function*/
-  submitMovie(){
-    //trim() will cut any spaces before and after a string
-		const title = document.getElementById('title').value.trim();
-		const year = parseInt(document.getElementById('year').value);
-    //split(',') will split each word separated by a comma
-		const genre = document.getElementById('genre').value.split(',');
-		const cover = document.getElementById('cover').value;
-		const genreArr = [];
-    //Title and year is required to create a moive
-		if(title && year){
-      /*Self invoked arrow function that will push every
-      genre into genreArr and return/call function create()
-      with some parameters that contains information about the movie*/
-			(() => {
-    		for (let i = 0; i < genre.length; i++){
-		    	genreArr.push(genre[i].trim());
-		    }
-        //create() is called and will have access to parameters as below
-				return this.create(title, year, genreArr, cover);
-			})();
-		} else {
-      //Something went wrong...
-			console.log('Errorrrrrr!!!');
-		}
-		document.getElementById('forms').reset();
+
+
+  //Creates a new movie object with, takes 4 parameters
+  movie(title, year, genres, cover){
+    let ratings = [];
+    let avgRatings = 0;
+    let id = 0;
+    const movieTitle = Object.create(this.prototype);
+    movieTitle.title = title;
+    movieTitle.year = parseInt(year);
+    movieTitle.genres = genres;
+    movieTitle.ratings = ratings;
+    movieTitle.avgRatings = avgRatings;
+    movieTitle.cover = cover || 'https://lbn.voxcinemas.com/assets/images/placeholder-poster-480x686.jpg';
+    movieTitle.id = this.incrementUniqueId(id);
+    this.pushNewMovie(movieTitle);
+    return movieTitle;
   },
-  /*create() This function/constructor will recive variables/parameters from submitMovie and
-  define what each variable will be in its object after it has been created and
-  pushed into movies array*/
-  create(title, year, genreArr, cover){
-    //A new object will be created according to this prototype type wich in this case is an object{}
-    const movie = Object.create(this.prototype);
-    //the title parameter will be the title of the movie
-    movie.title = title;
-    movie.year = year;
-    movie.genre = genreArr;
-    //a new array is defined and created within the object, this will hold users ratings in the future for this object
-    movie.ratings = [];
-    //same goes for this array but instead this will hold the average rating of the ratings array
-    movie.avgRatings = [];
-    /*if the user didnt apply any url for this movie this cover will have a placeholder
-    so that we wont have any errors in the image section of this object*/
-    movie.cover = cover || "https://lbn.voxcinemas.com/assets/images/placeholder-poster-480x686.jpg";
-    //finally we push this new object into the movies array
+
+  //Pushes the new movie object into the movies array and sends the movie object to renderNewMovie()
+  pushNewMovie(movie){
+    //Pushes the movie object into movies array
     this.movies.push(movie);
-		let movieTitle = this.movies;
-    //render() function is called and will render all of the movies within the movies array of this object to HTML
-    return this.render(movieTitle);
+    //Calls the function renderNewMovie() with the movie object as an array
+    this.renderNewMovie([movie]);
   },
-  /*rateMovie() This function will be called when a user clicks the "+1" button
-  on each movie card and it will prompt/ask the user to rate the movie
-  between 1-10. This function takes an event as a parameter*/
-  rateMovie(event){
-    //Users input will be stored in this variable.
-  	let userRate = parseInt(prompt('Ange ett betyg mellan 1-10'));
-    //This will validate if the users input is higher than 0 and smaller or equal to 10
-  	if(userRate > 0 && userRate <= 10){
-      /*The event target is pointed out and stored in a variable,
-      we can use this later to see if this elements innerHTML (movie title)
-      matches with one of the movies title in movies array*/
-  		let e = event.target.parentNode.parentNode.childNodes[3].childNodes[1].innerHTML;
-			let sum = 0;
-      //Looping through the movies array
-  		for(let i = 0; i < this.movies.length; i++){
-        //If event targets innerHTML (movie title) is equal to this movie title
-  			if(e === this.movies[i].title){
-          //Push users rating to this movies ratings
-  				this.movies[i].ratings.push(userRate);
-          //Loop through this movies ratings
-					for(let j = 0; j < this.movies[i].ratings.length; j++){
-            //Variable sum will contain the total of all ratings
-						sum += this.movies[i].ratings[j];
-					}
-          //Variable avgRate will hold the new average rating for this movie
-					let avgRate = sum/this.movies[i].ratings.length;
-          //This movies avgRatings array will clear current average rating...
-					this.movies[i].avgRatings.pop();
-          //...and push the new average rating for this movie
-					this.movies[i].avgRatings.push(avgRate.toFixed(1));
-          //event.target will put/render the new value into HTML
-          event.target.parentNode.childNodes[4].innerText =
-          //toFixed(1) makes the average rating only contain one decimal
-          `Ratings: ${avgRate.toFixed(1)}`;
-				}
-  		}
-  	} else {
-      //If user input (rating) is lower then 1 or higher then 10 this error will be alerted
-  		alert('Betygsättning ej godkänd');
-  	}
-  },
-  /*getTopRatedMovie() This function will be calle if the user wants to see wich of
-  all the movies within the movies array has the highest average rating*/
-  getTopRatedMovie(){
-    //This will get the id of 'movieView' within the html document and set the HTML to blank ''
-		document.getElementById('movieView').innerHTML = '';
-    //A new array is created that will hold all the movies average rating array
-		let highest = [];
-    //Looping through this objects movies array
-		for(let i = 0; i < this.movies.length; i++){
-			highest.push(this.movies[i].avgRatings);
-		}
-    //This function will check if current arrays average rating is higher then the current one
-		highest.sort(function(a, b){
-			return b-a;
-		});
-    //Then this will check if this movies average rating has the value of the highest average rating...
-		for(let i = 0; i < this.movies.length; i++){
-			if(this.movies[i].avgRatings == highest[0][0]){
-        //...when it matches this movie will be stored in a array...
-				const movieTitle = [this.movies[i]];
-        //...and return it to render()
-				return this.render(movieTitle);
-			}
-		}
-  },
-  /*getWorstRatedMovie() This function will do exactly the same as getTopRatedMovie()
-  but return the movie with the lowest rating instead*/
-  getWorstRatedMovie(){
-		document.getElementById('movieView').innerHTML = '';
-		let lowest = [];
-		for(let i = 0; i < this.movies.length; i++){
-			lowest.push(this.movies[i].avgRatings);
-		}
-		lowest.sort(function(a, b){
-			return a-b;
-		});
-		for(let i = 0; i < this.movies.length; i++){
-			if(this.movies[i].avgRatings == lowest[0][0]){
-				const movieTitle = [this.movies[i]];
-				return this.render(movieTitle);
-			}
-		}
-  },
-  /*getMoviesThisYear() This function will recive and render all of the movies that contains
-  the year of users input*/
-  getMoviesThisYear(){
-  	let getYear = document.getElementById('yearinput').value;
-  	let movieTitle = [];
-    //If the users input of year is higher then 3 digits the code within brackets will run
-  	if(getYear.length > 3){
-      //Looping through movies length
-  		for(let i = 0; i < this.movies.length; i++){
-        //If users input is equal to this movies year
-  			if(parseInt(getYear) === this.movies[i].year){
-          //This movie will be pushed into the new array movieTitle
-  				movieTitle.push(this.movies[i]);
-  			}
-  		}
-      //The new array will be returned to render() and render in HTML
-  		return this.render(movieTitle);
-      //Else if the users input is smaller then 4 alld of the movies will render in HTML
-  	} else if (getYear.length < 4) {
-      return this.render(this.movies);
-    }
-  },
-  /*getMoviesByGenre() This function will recive and render all of the movies that contains
-  the genre given by the user in search*/
-  getMoviesByGenre(){
-    let movieTitle = [];
-		const getMoviesByGenre = prompt('Sök på genre:').toUpperCase();
-		for(let i = 0; i < this.movies.length; i++){
-			for(let j = 0; j < this.movies[i].genre.length; j++){
-        //If users input matches one of this movies genre...
-				if(getMoviesByGenre === this.movies[i].genre[j].toUpperCase()){
-          //...this movie will be pushed into the new array movieTitle
-					movieTitle.push(this.movies[i]);
-				}
-			}
-		}
-    //And return and be rendered to HTML
-		return this.render(movieTitle);
-  },
-  /*render() This function is pretty big in this whole object because this is the function
-  that renders all of the HTML and presents all of the movies in this object, almost all functions
-  calls this function to render anything*/
-  render(movieTitle){
-    //First of all this function checks if the parameter contains one or more objects to render
-		if(movieTitle.length >= 1){
-      //Since it will render all the time the movieView needs to reset so that we wont get doublets in HTML
-			document.getElementById('movieView').innerHTML = '';
-      //Looping through the array of objects
-			for(let i = 0; i < movieTitle.length; i++){
-				let cover = movieTitle[i].cover;
-				let title = movieTitle[i].title;
-				let year = movieTitle[i].year;
-				let genre = movieTitle[i].genre;
-				let avgRatings = movieTitle[i].avgRatings;
-				let sum = 0;
-				for(let j = 0; j < movieTitle[i].ratings.length; j++){
-					sum += movieTitle[i].ratings[j];
-				}
-        //If this is a new object/movie created by the user this movie will have a default of 0 in average rating
-				let avgRate = sum/movieTitle[i].ratings.length || 0;
-				avgRatings.pop();
-				avgRatings.push(avgRate.toFixed(1));
-				document.getElementById('movieView').innerHTML +=
-        //This is the actual HTML that renders all the time, every object/movie will have this structure
-				`<div class="column col-4">
-					<div class="card">
-						 <div class="card-image">
-								<img class="img-responsive" src="${cover}">
-							</div>
-							<div class="card-header">
-								<h4 class="card-title">${title}</h4>
-								<h6 class="card-meta">${year}</h6>
-							</div>
-							<div class="card-footer">
-								<div class="chip">
-									<div class="chip-title">Genres:&nbsp;</div>
-									<div class="chip-meta">${genre}</div>
-								</div></br>
-								<div class="chip">
-									<div class="chip-title">Ratings:&nbsp;</div>
-									<div class="chip-meta">${avgRatings}</div>
-								</div></br></br>
-								<button class="btn btn-sm tooltip" data-tooltip="Sätt betyg" onclick="movieDataBase.rateMovie(event)">+1</button>
-								<button class="btn btn-sm tooltip" data-tooltip="Lägg till/editera genre" onclick="movieDataBase.addGenre(event)">Genre</button>
-						 </div>
-					</div>
-				</div>`;
-			}
-		} else {
-      /*This will be rendered if getMoviesThisYear() or getMoviesByGenre()
-      wont find any movies that matches the users input*/
-			document.getElementById('movieView').innerHTML =
-			`<div class="toast toast-danger">
-			  <i class="icon icon-error_outline"></i> Din sökning gav inga träffar.
-			</div>`;
-		}
-  },
-  /*addGenre() This function will be called if a user wants to rate a movie,
-  this function takes one parameter, event*/
-  addGenre(event){
-    //The event target will be in relative to the actual injector of this function wich is the button 'Genre'
-    let e = event.target.parentNode.parentNode.childNodes[3].childNodes[1].innerHTML;
-    //Looping through movies array
-    for(let i = 0; i < this.movies.length; i++){
-      //If this event target innerHTML (movies title) matches with the movie title
-      if(e === this.movies[i].title){
-        //A new variable is declared to hold this movie object that matched
-        let currentGenre = this.movies[i].genre;
-        //The user will be prompted and asked to enter a new genre or edit current genre for this movie
-        let newGenre = prompt('Editera/Lägg till genre:', `${currentGenre}`).split(',');
-        if(newGenre !== '' && newGenre !== null){
-          //Users input will be equal to this movies genre array
-          this.movies[i].genre = newGenre;
-          //Finally this will be rendered into HTML
-          event.target.parentNode.childNodes[1].innerHTML =
-          `<div class="chip-title">Genres:&nbsp;</div>
-          <div class="chip-meta">${newGenre}</div>`;
-        }
+
+  //rateMovie() takes 2 parameters and it will set add a rating to a movies ratings
+  rateMovie(movie, rating){
+    //Filters movies array
+    this.movies.filter(title => {
+      //Checks if the movie is equal to current movies title
+      if(movie === title.title){
+        //If it is this movies ratings array will receive the rating user set
+        title.ratings.push(rating);
+        /*Since there's a new rating for this movie the averagerating needs to be
+        recalculated so calculateAverage() will be called to calculate this*/
+        moviedb.calculateAverage(title, title.ratings);
+        return title;
       }
+    });
+  },
+
+  //getTopRatedMovie() will get the movie with highest average rating
+  getTopRatedMovie(){
+    //Reduces movies array...
+    const topRated = this.movies.reduce((a, b) => {
+      /*...so that in the end we will only have one movie (a)
+      that contains the highest average rating and returns it*/
+      return a.avgRatings > b.avgRatings ? a : b;
+    }, 0);
+    /*Then the movie with the highest average rating will
+    be sent to checkDivsClassname() to only show that movie in HTML*/
+    this.checkDivsClassname([topRated]);
+    return topRated;
+  },
+
+  //getWorstRatedMovie() will get the movie with lowest average rating
+  getWorstRatedMovie(){
+    //Same as getTopRatedMovie() but for the movie that has the lowest average rating
+    const worstRated = this.movies.reduce((a, b) => {
+      return a.avgRatings < b.avgRatings ? a : b;
+    }, 0);
+    this.checkDivsClassname([worstRated]);
+    return worstRated;
+  },
+
+  //getMoviesThisYear() will filter movies array to match year value
+  getMoviesThisYear(year){
+    let movies = [];
+    //Filters the movies array...
+    this.movies.filter(movie => {
+      //...if the current movies year matches with year..
+      if(movie.year === parseInt(year))
+        //...current movie will be pushed into the array movies
+        movies.push(movie);
+    });
+    //And here the movie(s) will be sent to checkDivsClassname that will render this into HTML
+    this.checkDivsClassname(movies);
+    return movies;
+  },
+
+  /*getMoviesByGenre() will go through all movies and check
+  if users input of genres matches any of movies genres*/
+  getMoviesByGenre(genres){
+    let movies = [];
+    //For each userinput genre..
+    genres.forEach(genre => {
+      //..filter movies..
+      moviedb.movies.filter(movie => {
+        //..and see if movies genres includes any of users input of genre..
+        if(movie.genres.includes(genre))
+          //..if so push this movie into movies array
+          movies.push(movie);
+      });
+    });
+    //And here the movie(s) will be sent to checkDivsClassname that will render this into HTML
+    this.checkDivsClassname(movies);
+  },
+
+  //Adds a uniqe id to each movie created
+  incrementUniqueId(id){
+    /*A variable with name highest creates and this
+    will save the value of the movie in movies that currently
+    holds the highest value of id*/
+    let highest = this.movies.reduce((a, b) => {
+      //if movie (a.id) has a higher id value then movie (b.id) return it
+      return (a.id > b.id) ? a.id : b.id;
+    }, 0);
+    /*The new movie that has been created will
+    receive an id of highest +1 wich then will
+    be the highest value in movies array*/
+    id = highest + 1;
+    return id;
+  },
+
+  //calculateAverage() will calculate average rating of all ratings in a movie
+  calculateAverage(movie, ratings){
+    let sum = ratings.reduce((a, b) => {
+      return a + b;
+    });
+    let avg = sum / ratings.length;
+    movie.avgRatings = avg.toFixed(1);
+  },
+
+  //--DOM / VIEW functions--//
+
+  /*renderAllMoviesInDatabase() renders all
+  the movies in movies array to HTML, this function
+  will only be called once and I didnt know how to solve
+  this better since this is a local 'database'...*/
+  renderAllMoviesInDatabase(){
+    /*Self invoked function to loop through all the movies
+    in movies array and calculate average rating for every movie*/
+    (() => {
+      for(let i = 0; i < moviedb.movies.length; i++){
+        let movie = moviedb.movies[i];
+        let ratings = moviedb.movies[i].ratings;
+        moviedb.calculateAverage(movie, ratings);
+      }
+    })();
+    //For each movie render this template into HTML
+    this.movies.forEach((movie, index) => {
+      this.el.movies.innerHTML +=
+      `<div class="column col-3 col-xs-6 movieobject" id="${moviedb.id++}">
+        <div class="card">
+          <div class="card-image">
+            <img class="img-responsive cover" src="${movie.cover}">
+          </div>
+          <div class="card-header">
+            <div class="card-title movietitle">${movie.title}</div>
+            <div class="card-meta">${movie.year}</div>
+          </div>
+          <div class="card-footer">
+            <div class="chip">
+              <div class="chip-title">Genres:&nbsp;</div>
+              <div class="chip-meta moviegenre">${movie.genres}</div>
+            </div></br>
+            <div class="chip">
+              <div class="chip-title"><i class="fa fa-star" id="star" aria-hidden="true"></i>&nbsp;</div>
+              <div class="chip-meta movieavgrating">${movie.avgRatings}</div>
+            </div></br></br>
+            <a onclick="moviedb.ratingModalOpen(${index})" class="btn btn-sm tooltip tooltip-top" data-tooltip="Rate movie"><i class="fa fa-heart" aria-hidden="true"></i></a>
+            <a onclick="moviedb.editGenreModalOpen(${index})" class="btn btn-sm tooltip tooltip-top" data-tooltip="Add/Edit genre">Genre</a>
+          </div>
+        </div>
+      </div>`;
+    });
+  },
+
+  //renderNewMovie() will render out every new movie that is created by the user
+  renderNewMovie(movies){
+    movies.forEach(movie => {
+      moviedb.el.movies.innerHTML +=
+      `<div class="column col-3 col-xs-6 movieobject" id="${moviedb.id++}">
+        <div class="card">
+          <div class="card-image">
+            <img class="img-responsive cover" src="${movie.cover}">
+          </div>
+          <div class="card-header">
+            <div class="card-title movietitle">${movie.title}</div>
+            <div class="card-meta">${movie.year}</div>
+          </div>
+          <div class="card-footer">
+            <div class="chip">
+              <div class="chip-title">Genres:&nbsp;</div>
+              <div class="chip-meta moviegenre">${movie.genres}</div>
+            </div></br>
+            <div class="chip">
+              <div class="chip-title"><i class="fa fa-star" id="star" aria-hidden="true"></i>&nbsp;</div>
+              <div class="chip-meta movieavgrating">${movie.avgRatings}</div>
+            </div></br></br>
+            <a onclick="moviedb.ratingModalOpen(${movie.id})" class="btn btn-sm tooltip tooltip-top" data-tooltip="Sätt betyg"><i class="fa fa-heart" aria-hidden="true"></i></a>
+            <a onclick="moviedb.editGenreModalOpen(${movie.id})" class="btn btn-sm tooltip tooltip-top" data-tooltip="Lägg till/Editera/Ta bort">Genre</a>
+          </div>
+        </div>
+      </div>`;
+    });
+  },
+
+  /*ratingModalOpen() takes index from current movie or movie.id
+  (depends if the movie is created by the user or if it existed
+  before in the movies array), this will open a modal and user can
+  rate the movie of current index*/
+  ratingModalOpen(i){
+    //This will make it so that user cant scroll when modal is open
+    this.el.canvas.style = 'overflow:hidden';
+    //This will make the modal to open
+    this.el.modal[0].className = 'modal active';
+    //Adds some html to the modal and I did this because i needed the index for the clickevent
+    document.getElementById('closebtn').innerHTML =
+    `<button class="btn btn-clear float-right" onclick="moviedb.ratingModalClose(${i})"></button>`;
+    document.getElementById('submitbtn').innerHTML =
+    `<button class="btn btn-secondary" id="submit" onclick="moviedb.ratingModalSubmit(${i})">Submit</button>`;
+    //Focuses the input field..
+    document.getElementById('rating').focus();
+    //onkeydown event for the modal
+    document.getElementById('modal').onkeydown = (event) => {
+      //esc button will close the modal
+      if(event.keyCode == 27){
+        moviedb.ratingModalClose();
+        //enter button will submit if the requirements
+      } else if(event.keyCode == 13){
+        moviedb.ratingModalSubmit(i);
+      }
+    };
+  },
+
+  //ratingModalClose() will close the modal
+  ratingModalClose(){
+    //Page is now scrollable again
+    this.el.canvas.style = 'overflow:none;';
+    //Modal is not active anymore
+    this.el.modal[0].className = 'modal';
+    //Input field will reset
+    document.getElementById('rating').value = '';
+  },
+
+  /*ratingModalSubmit() will take the index of current movie to
+  know wich movie to add new rating to*/
+  ratingModalSubmit(i){
+    let forminput = this.el.forminput[0];
+    let ratingValue = document.getElementById('rating').value;
+    let rating = [];
+    let title = document.getElementsByClassName('movietitle')[i];
+    let avgRating = document.getElementsByClassName('movieavgrating')[i];
+    rating.pop();
+    if(ratingValue > 0 && ratingValue < 11){
+      rating.push(ratingValue);
+      document.getElementById('rating').value = '';
+      forminput.className = 'form-input';
+      forminput.placeholder = 'Betyg...';
+      this.ratingModalClose();
+      this.movies.filter((movie) => {
+        if(movie.title === title.innerHTML){
+          moviedb.rateMovie(movie.title, parseInt(ratingValue));
+          console.log(movie.avgRatings);
+          avgRating.innerHTML = movie.avgRatings;
+        }
+      });
+    } else if(ratingValue < 1) {
+      forminput.className = 'form-input is-danger';
+      forminput.placeholder = 'För lågt betyg...';
+      document.getElementById('rating').value = '';
+    } else {
+      forminput.className = 'form-input is-danger';
+      forminput.placeholder = 'För högt betyg...';
+      document.getElementById('rating').value = '';
     }
   },
+
+  //newMovieModalOpen() will open up a modal for the user to create/submit a new movie
+  newMovieModalOpen(){
+    this.el.canvas.style = 'overflow:hidden;';
+    this.el.modal[1].className = 'modal active';
+    document.getElementById('title').focus();
+    document.getElementById('newmovie').onkeydown = (event) => {
+      if(event.keyCode == 27){
+        moviedb.newMovieModalClose();
+      } else if(event.keyCode == 13){
+        moviedb.newMovieModalSubmit();
+      }
+    };
+  },
+
+  //newMovieModalClose() will close the modal when user clicked close or submitted a movie
+  newMovieModalClose(){
+    this.el.canvas.style = 'overflow:none;';
+    this.el.modal[1].className = 'modal';
+    document.getElementById('title').className = 'form-input';
+    document.getElementById('year').className = 'form-input';
+  },
+
+  //newMovieModalSubmit() will take all values from the form and create the new movie
+  newMovieModalSubmit(){
+    let genres = [];
+    let title = document.getElementById('title').value;
+    let year = document.getElementById('year').value;
+    //Creates an array from the HTML collection so that I can loop through it
+    let genre = Array.from(document.querySelectorAll('input[class=form-check-input]:checked'));
+    //For..of to see what genres are checked..
+    for(let val of genre){
+      //..and push them into genres array
+      genres.push(val.value);
+    }
+    let cover = document.getElementById('cover').value;
+    if(title && year.length === 4){
+      //Sends the values to movie() and creates the new movie
+      this.movie(title, year, genres, cover);
+      this.newMovieModalClose();
+    } else if(!title && !year){
+      document.getElementById('title').className = 'form-input is-danger';
+      document.getElementById('year').className = 'form-input is-danger';
+    } else if(!title){
+      document.getElementById('title').className = 'form-input is-danger';
+    } else if(!year){
+      document.getElementById('year').className = 'form-input is-danger';
+    }
+  },
+
+  /*editGenreModalOpen() will take the index of current
+  movie and open a modal wich will make the user able to
+  remove or add a genre*/
+  editGenreModalOpen(i){
+    this.el.canvas.style = 'overflow:hidden;';
+    this.el.modal[2].className = 'modal active';
+    document.getElementById('currentmovie').innerHTML =
+    `<h6>${this.movies[i].title}</h6>`;
+    document.getElementById('newgenressubmit').innerHTML =
+    `<button class="btn btn-secondary" id="submit" onclick="moviedb.editGenreModalSubmit(${i})">Submit</button>`;
+    document.getElementById('currentmoviesgenres');
+    //Creates an array from the HTML collection
+    let genres = Array.from(document.querySelectorAll('input[class=form-check-edit]'));
+    //Loops through the genres array..
+    genres.forEach(genre => {
+      //..if the current movies genres includes any of genres value (checkbox values)..
+      if(this.movies[i].genres.includes(genre.value)){
+        //..make those checkboxes checked to get a clear view of what the current movies genres are
+        genre.checked = true;
+      }
+    });
+
+    document.getElementById('modalgenre').onkeydown = (event) => {
+      if(event.keyCode == 27){
+        moviedb.editGenreModalClose(i);
+      } else if(event.keyCode == 13){
+        moviedb.editGenreModalSubmit(i);
+      }
+    };
+  },
+
+  //editGenreModalClose() will close the modal and reset modals checkboxes
+  editGenreModalClose(){
+    this.el.canvas.style = 'overflow:none;';
+    this.el.modal[2].className = 'modal';
+    let genres = document.querySelectorAll('input[class=form-check-edit]');
+    //Makes all checkboxes..
+    for(let genre of genres){
+      //..not checked
+      genre.checked = false;
+    }
+  },
+
+  //editGenreModalSubmit() takes index from the current movie and sets the new genres
+  editGenreModalSubmit(i){
+    let moviegenre = document.getElementsByClassName('moviegenre')[i];
+    let movietitle = document.getElementsByClassName('movietitle')[i];
+    let genres = [];
+    //Get all genres from checkbox values that are checked
+    let genre = document.querySelectorAll('input[class=form-check-edit]:checked');
+    //Get all values from genres checkboxes that are checked..
+    for(let checked of genre){
+      //..and push them into genres array
+      genres.push(checked.value);
+    }
+    console.log(this.movies[i]);
+    //The movies genres is now equal to the new genres from user input
+    this.movies[i].genres = genres;
+    //Aswell the HTML will render the new value of genres
+    moviegenre.innerHTML = genres;
+    this.editGenreModalClose();
+  },
+
+  //searchByYearModalOpen() opens up a modal and allows the user to search movie(s) by year
+  searchByYearModalOpen(){
+    document.getElementById('searchfor').value = '';
+    this.el.canvas.style = 'overflow:hidden;';
+    this.el.modal[3].className = 'modal active';
+    document.getElementById('searchfor').focus();
+    document.getElementById('modalsearch').onkeydown = (event) => {
+      if(event.keyCode == 27){
+        moviedb.searchByYearModalClose();
+      } else if(event.keyCode == 13){
+        moviedb.searchByYearModalSubmit();
+      }
+    };
+  },
+
+  //searchByYearModalClose() closes the modal
+  searchByYearModalClose(){
+    this.el.canvas.style = 'overflow:none;';
+    this.el.modal[3].className = 'modal';
+  },
+
+  //searchByYearModalSubmit() submits users input and sends the value to getMoviesThisYear()
+  searchByYearModalSubmit(){
+    let year = document.getElementById('searchfor').value;
+    if(year){
+      this.getMoviesThisYear(year);
+      this.searchByYearModalClose();
+    }
+  },
+
+  //searchByGenreOpen() opens up a modal and allows the user to search movie(s) by genre
+  searchByGenreOpen(){
+    this.el.modal[4].className = 'modal active';
+    this.el.canvas.style = 'overflow:hidden;';
+    let genres = document.querySelectorAll('input[class=form-check-genre]');
+    for(let genre of genres){
+      genre.checked = false;
+    }
+    document.getElementById('choosegenre').onkeydown = (event) => {
+      if(event.keyCode == 27){
+        moviedb.searchByGenreClose();
+      } else if(event.keyCode == 13){
+        moviedb.searchByGenreSubmit();
+      }
+    };
+  },
+
+  //searchByGenreClose() closes the modal
+  searchByGenreClose(){
+    this.el.canvas.style = 'overflow:none;';
+    this.el.modal[4].className = 'modal';
+  },
+
+  //searchByGenreSubmit() submits users input and sends the value to getMoviesByGenre()
+  searchByGenreSubmit(){
+    let genres = [];
+    //Makes an array from select HTML collection list
+    let select = Array.from(document.querySelectorAll('input[class=form-check-genre]:checked'));
+    select.forEach(selected => genres.push(selected.value));
+    this.getMoviesByGenre(genres);
+    this.searchByGenreClose();
+  },
+
+  //checkDivsClassname() takes one parameter and this function will only renders the movies in the parameter
+  checkDivsClassname(movies){
+    //Get all elements of document.getElementsByClassName('movieobject')
+    for(let div of this.el.movieobject){
+      //Add class 'hide' to hide all divs
+      div.classList.add('hide');
+    }
+    //Filter through movies
+    return this.movies.filter((movie, index) => {
+      for(let title of movies){
+        //if current movie in movies is equal to the movies title from parameter..
+        if(movie === title)
+        //..remove the class 'hide' to show only the movies that was taken in from the parameter
+        moviedb.el.movieobject[index].classList.remove('hide');
+      }
+    });
+  },
+
+  //getAllMovies() will render all movies in the movies array
+  getAllMovies(){
+    let movieobjects = Array.from(this.el.movieobject);
+    return movieobjects.forEach(div => div.classList.remove('hide'));
+  }
 };
-
-/*This adds an eventlistener to the element with id 'allmovies'
-in HTML and it will trigger the function render() within the object*/
-document.getElementById('allmovies').addEventListener('click', () => movieDataBase.render(movieDataBase.movies));
-
-/*This eventlistener trigger as soon as the html document has loaded
-and the render() will be called to render all the movies within the object*/
-window.addEventListener("load", function load(event){
-    window.removeEventListener("load", load, false);
-    movieDataBase.render(movieDataBase.movies);
-},false);

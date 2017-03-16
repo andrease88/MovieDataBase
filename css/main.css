@@ -1,6 +1,133 @@
-h4{
-  margin-bottom: 10px!important;
+#modalratingcontainer{
+  width: 25rem;
 }
-h6{
-  margin-bottom: 0px!important;
+
+#modalnewmoviecontainer{
+  width: 45rem;
+}
+
+#modaleditgenrecontainer{
+  width: 31rem;
+}
+
+#modalsearchgenrecontainer{
+  width: 35rem;
+}
+
+#buttoncontainer{
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  width: auto;
+  padding: 1rem 0;
+}
+
+#addmovie{
+  width: 6rem;
+  height: 6rem;
+  opacity: 0.8;
+}
+
+#addmovie:hover{
+  opacity: 1;
+}
+
+#search{
+  width: 6rem;
+  height: 6rem;
+  opacity: 0.8;
+  left: -10rem;
+}
+
+#search:hover{
+  opacity: 1;
+}
+
+/*.fa{
+-webkit-transition-duration: 0.3s;
+-moz-transition-duration: 0.3s;
+-o-transition-duration: 0.3s;
+transition-duration: 0.3s;
+-webkit-transition-property: -webkit-transform;
+-moz-transition-property: -moz-transform;
+-o-transition-property: -o-transform;
+transition-property: transform;
+overflow:hidden;
+}
+
+.fa:hover{
+-webkit-transform:rotate(360deg);
+-moz-transform:rotate(360deg);
+-o-transform:rotate(360deg);
+}*/
+
+#highest{
+  width: 6rem;
+  height: 6rem;
+  opacity: 0.8;
+  left: -10rem;
+}
+
+#highest:hover{
+  opacity: 1;
+}
+
+#lowest{
+  width: 6rem;
+  height: 6rem;
+  opacity: 0.8;
+  left: -10rem;
+}
+
+#lowest:hover{
+  opacity: 1;
+}
+
+#all{
+  width: 6rem;
+  height: 6rem;
+  opacity: 0.8;
+  left: -10rem;
+}
+
+#all:hover{
+  opacity: 1;
+}
+
+#buttoncontainer:hover .btn.btn-action.btn-lg{
+  margin-right: 3rem;
+  left: 1rem;
+}
+
+#buttoncontainer:hover{
+  width: 100vw;
+  padding-left: 2rem;
+}
+
+.btn.btn-action.btn-lg{
+  margin-right: -6.3rem;
+  left: -2.5rem;
+}
+
+
+#star{
+  color: #797EC0;
+}
+
+.form-check{
+  display: inline-block;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-genres{
+  margin-bottom: 1rem;
+}
+
+.modal-body{
+  overflow: visible;
+}
+
+#form-genres{
+  margin: 0;
 }

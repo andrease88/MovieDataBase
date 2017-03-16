@@ -5,71 +5,275 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
   <link rel="stylesheet" href="dist/spectre.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
 </head>
-<body id="canvas">
-	<div class="container grid-960">
-		<div class="columns">
-		    <div class="column col-6">
-		        <form action="#forms" id="forms" autocomplete="off">
-		            <div class="form-group">
-		                <label class="form-label">Titel</label>
-		                <input id="title" class="form-input" type="text" placeholder="Titel">
-		            </div>
-		            <div class="form-group">
-		                <label class="form-label">Bild</label>
-		                <input id="cover" class="form-input" type="url" placeholder="Url till bild">
-		            </div>
-		            <div class="form-group">
-		                <label class="form-label">Årtal</label>
-		                <input id="year" class="form-input" type="number" placeholder="Årtal">
-		            </div>
-		            <div class="form-group">
-		                <label class="form-label">Genre</label>
-		                <input id="genre" class="form-input" type="text" placeholder="För att lägga till fler genres separera med komma ,">
-		            </div>
-		            <div class="form-group">
-		                <button class="btn btn-primary" type="submit" onclick="movieDataBase.submitMovie()">Lägg till film</button>
-		                <button class="btn btn-link" type="reset">Avbryt</button>
-		            </div>
-		        </form>
-		    </div>
-		    <div class="column col-xs-6">
-					<form action="#forms" autocomplete="off">
-						<div class="form-group">
-								<label class="form-label">Sök efter film(er) med premiärår</label>
-								<input id="yearinput" class="form-input" type="number" placeholder="År" onkeyup="movieDataBase.getMoviesThisYear()">
+<body id="canvas" onload="moviedb.renderAllMoviesInDatabase()">
+	<div class="container" id="containerbody">
+		<div class="columns" id="movies">
+			<div class="modal" id="modal">
+	      <div class="modal-overlay"></div>
+	      <div class="modal-container" id="modalratingcontainer">
+	        <div class="modal-header">
+	          <span id="closebtn"></span>
+	    			<h6>Rate 1-10</h6>
+	        </div>
+	        <div class="modal-body">
+	          <div class="content" id="inputrating">
+	            <input class="form-input" id="rating" type="number" placeholder="">
+	          </div>
+	        </div>
+	        <div class="modal-footer">
+	          <span id="submitbtn"></span>
+	        </div>
+	      </div>
+	    </div>
+			<div class="modal">
+				<div class="modal-overlay"></div>
+				<div class="modal-container" id="modalnewmoviecontainer">
+					<div class="modal-header">
+						<button class="btn btn-clear float-right" onclick="moviedb.newMovieModalClose()"></button>
+						<h6>Add a new movie</h6>
+					</div>
+					<div class="modal-body">
+						<div class="content" id="newmovie">
+							<label>Title</label>
+							<input class="form-input" id="title" type="text" placeholder=""></br>
+							<label>Year</label>
+							<input class="form-input" id="year" type="number" placeholder=""></br>
+							<div class="form">
+								<label>Genres</label>
+							</div>
+							<div class="form-genres">
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-input" type="checkbox" value="Action"> Action</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-input" type="checkbox" value="Drama"> Drama</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-input" type="checkbox" value="Sci-Fi"> Sci-Fi</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-input" type="checkbox" value="Fantasy"> Fantasy</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-input" type="checkbox" value="Documentary"> Documentary</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-input" type="checkbox" value="Comedy"> Comedy</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-input" type="checkbox" value="Mystery"> Mystery</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-input" type="checkbox" value="Adventure"> Adventure</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-input" type="checkbox" value="History"> History</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-input" type="checkbox" value="Animation"> Animation</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-input" type="checkbox" value="Family"> Family</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-input" type="checkbox" value="Romance"> Romance</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-input" type="checkbox" value="Crime"> Crime</label>
+								</div>
+							</div>
+							<label>Link to cover</label>
+							<input class="form-input" id="cover" type="url" placeholder=""></br>
 						</div>
-					</form></br>
-					<div class="dropdown">
-              <a class="btn btn-link dropdown-toggle" tabindex="0">Hämta <i class="icon-caret"></i></a>
-              <ul class="menu">
-                  <li class="menu-item">
-                      <a href="#dropdowns" id="allmovies">
-                          Alla filmer
-                      </a>
-                  </li>
-                  <li class="menu-item">
-                      <a href="#dropdowns" onclick="movieDataBase.getTopRatedMovie()">
-                          Film med högsta betyg
-                      </a>
-                  </li>
-                  <li class="menu-item">
-                      <a href="#dropdowns" onclick="movieDataBase.getWorstRatedMovie()">
-                          Film med lägsta betyg
-                      </a>
-                  </li>
-                  <li class="menu-item">
-                      <a href="#dropdowns" onclick="movieDataBase.getMoviesByGenre()">
-                          Film med genre
-                      </a>
-                  </li>
-              </ul>
-          </div>
-      </div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" id="submit" onclick="moviedb.newMovieModalSubmit()">Submit</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal" id="modalgenre">
+				<div class="modal-overlay"></div>
+				<div class="modal-container" id="modaleditgenrecontainer">
+					<div class="modal-header">
+						<button class="btn btn-clear float-right" onclick="moviedb.editGenreModalClose()"></button>
+						<span id="currentmovie"></span>
+					</div>
+					<div class="modal-body">
+						<div class="content">
+							<div class="form-genres" id="currentmoviesgenres">
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-edit" type="checkbox" value="Action"> Action</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-edit" type="checkbox" value="Drama"> Drama</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-edit" type="checkbox" value="Sci-Fi"> Sci-Fi</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-edit" type="checkbox" value="Fantasy"> Fantasy</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-edit" type="checkbox" value="Documentary"> Documentary</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-edit" type="checkbox" value="Comedy"> Comedy</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-edit" type="checkbox" value="Mystery"> Mystery</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-edit" type="checkbox" value="Adventure"> Adventure</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-edit" type="checkbox" value="History"> History</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-edit" type="checkbox" value="Animation"> Animation</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-edit" type="checkbox" value="Family"> Family</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-edit" type="checkbox" value="Romance"> Romance</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-edit" type="checkbox" value="Crime"> Crime</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<span id="newgenressubmit"></span>
+					</div>
+				</div>
+			</div>
+			<div class="modal" id="modalsearch">
+				<div class="modal-overlay"></div>
+				<div class="modal-container" id="modaleditgenrecontainer">
+					<div class="modal-header">
+						<button class="btn btn-clear float-right" onclick="moviedb.searchModalClose()"></button>
+						<h6>Search by year</h6>
+						<span id="currentmoviegenres"></span>
+					</div>
+					<div class="modal-body">
+						<div class="content">
+							<input class="form-input" id="searchfor" type="number"></br>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<span id="newgenressubmit"></span>
+					</div>
+				</div>
+			</div>
+			<div class="modal" id="choosegenre">
+				<div class="modal-overlay"></div>
+				<div class="modal-container" id="modalsearchgenrecontainer">
+					<div class="modal-header">
+						<button class="btn btn-clear float-right" onclick="moviedb.searchByGenreClose()"></button>
+						<h6>Search by genre(s)</h6>
+						<span id="currentmoviegenres"></span>
+					</div>
+					<div class="modal-body">
+						<div class="content" id="genresbody">
+							<div class="form-genres" id="form-genres">
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-genre" type="checkbox" value="Action"> Action</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-genre" type="checkbox" value="Drama"> Drama</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-genre" type="checkbox" value="Sci-Fi"> Sci-Fi</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-genre" type="checkbox" value="Fantasy"> Fantasy</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-genre" type="checkbox" value="Documentary"> Documentary</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-genre" type="checkbox" value="Comedy"> Comedy</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-genre" type="checkbox" value="Mystery"> Mystery</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-genre" type="checkbox" value="Adventure"> Adventure</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-genre" type="checkbox" value="History"> History</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-genre" type="checkbox" value="Animation"> Animation</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-genre" type="checkbox" value="Family"> Family</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-genre" type="checkbox" value="Romance"> Romance</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+			    				<input class="form-check-genre" type="checkbox" value="Crime"> Crime</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" id="submit" onclick="moviedb.searchByGenreSubmit()">Submit</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="container grid-960">
-		<div class="columns" id="movieView"></div>
+	<div id="buttoncontainer">
+		<button class="btn btn-action btn-primary btn-lg circle tooltip tooltip-bottom" id="search" data-tooltip="Filter by genre" onclick="moviedb.searchByGenreOpen()"><i class="fa fa-film" aria-hidden="true"></i></button>
+		<button class="btn btn-action btn-primary btn-lg circle tooltip tooltip-bottom" id="search" data-tooltip="Filter by year" onclick="moviedb.searchByYearModalOpen()"><i class="fa fa-search" aria-hidden="true"></i></button>
+		<button class="btn btn-action btn-primary btn-lg circle tooltip tooltip-bottom" id="highest" data-tooltip="Get top rated movie" onclick="moviedb.getTopRatedMovie();"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></button>
+		<button class="btn btn-action btn-primary btn-lg circle tooltip tooltip-bottom" id="lowest" data-tooltip="Get worst rated movie" onclick="moviedb.getWorstRatedMovie()"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></button>
+		<button class="btn btn-action btn-primary btn-lg circle tooltip tooltip-bottom" id="all" data-tooltip="All movies" onclick="moviedb.getAllMovies()"><i class="fa fa-list" aria-hidden="true"></i></button>
+		<button class="btn btn-action btn-primary btn-lg circle tooltip tooltip-bottom" id="addmovie" data-tooltip="Add new movie" onclick="moviedb.newMovieModalOpen()"><i class="fa fa-plus" id="plus" aria-hidden="true"></i></button>
 	</div>
 	<script src="js/main.js"></script>
 </body>
